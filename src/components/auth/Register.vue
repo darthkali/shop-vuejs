@@ -103,13 +103,14 @@ export default {
         password: values.password,
         returnSecureToken: true
       }
-      axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={{apiKey}}", signupDO)
-          .then(response => {
-            console.log(response);
-          })
-          .catch(error => {
-            console.log(error);
-          })
+      axios.post(
+          'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + this.apiKey,
+          signupDO
+      ).then(response => {
+        console.log(response);
+      }).catch(error => {
+        console.log(error);
+      })
 
     },
     changeComponent(componentName) {
