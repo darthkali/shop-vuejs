@@ -16,18 +16,20 @@
       </div>
     </template>
     <template #right-col>
-      <h1>Rechte Spalte</h1>
+      <Register/>
     </template>
   </TheTwoColumnsLayout>
 </template>
 
 <script>
 import TheTwoColumnsLayout from "@/layouts/TheTwoColumnsLayout"; // @ is an alias to /src
+import Register from "@/components/auth/Register";
 
 export default {
   name: "HomePage",
   components: {
-    TheTwoColumnsLayout
+    TheTwoColumnsLayout,
+    Register
   }
 }
 </script>
