@@ -12,6 +12,7 @@
       </p>
     </div>
 
+
     <div class="alert alert-danger col-md-8 offset-2" v-if="error">
       {{ errorDisplayText}}
     </div>
@@ -52,7 +53,10 @@
       <div class="form-row mt-3">
         <div class=" form-group col-md-8 offset-2">
           <div class="d-grid">
-            <button class="btn bg-vue">Registrieren</button>
+            <button class="btn bg-vue">
+              <span v-if="!isLoading">Registrieren</span>
+              <span v-else class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            </button>
           </div>
         </div>
       </div>
@@ -97,7 +101,8 @@ export default {
     return {
       schema,
       apiKey: process.env.VUE_APP_FIREBASE_WEB_API_KEY,
-      error: ""
+      error: "",
+      isLoading: false
     }
   },
   computed:{
@@ -113,6 +118,7 @@ export default {
   },
   methods: {
     submitData(values) {
+      this.isLoading = true;
       const signupDO = {
         email: values.email,
         password: values.password,
@@ -123,9 +129,11 @@ export default {
           signupDO
       ).then(response => {
         console.log(response);
+        this.isLoading = false;
       }).catch(error => {
         // https://firebase.google.com/docs/reference/rest/auth#section-error-format
         this.error = error.response.data.error.message;
+        this.isLoading = false;
       })
 
 
