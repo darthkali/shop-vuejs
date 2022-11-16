@@ -119,6 +119,7 @@ export default {
   methods: {
     submitData(values) {
       this.isLoading = true;
+      this.error = "";
       const signupDO = {
         email: values.email,
         password: values.password,
@@ -130,6 +131,7 @@ export default {
       ).then(response => {
         console.log(response);
         this.isLoading = false;
+        this.changeComponent('login');
       }).catch(error => {
         // https://firebase.google.com/docs/reference/rest/auth#section-error-format
         this.error = error.response.data.error.message;
