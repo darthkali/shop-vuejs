@@ -12,6 +12,10 @@
       </p>
     </div>
 
+    <div class="alert alert-danger col-md-8 offset-2" v-if="error">
+      {{ errorDisplayText}}
+    </div>
+
     <Form @submit="submitData" :validation-schema="schema" v-slot="{errors}">
 
       <div class="form-row">
@@ -92,10 +96,21 @@ export default {
     })
     return {
       schema,
-      apiKey: process.env.VUE_APP_FIREBASE_WEB_API_KEY
+      apiKey: process.env.VUE_APP_FIREBASE_WEB_API_KEY,
+      error: ""
     }
-  }
-  ,
+  },
+  computed:{
+    errorDisplayText(){
+      if(this.error){
+        if(this.error.includes("EMAIL_EXISTS")){
+          return "Diese Email Adresse ist bereits registriert"
+        }
+        return "Es ist ein unbekannter Fehler aufgetreten"
+      }
+      return ""
+    }
+  },
   methods: {
     submitData(values) {
       const signupDO = {
@@ -109,8 +124,10 @@ export default {
       ).then(response => {
         console.log(response);
       }).catch(error => {
-        console.log(error);
+        // https://firebase.google.com/docs/reference/rest/auth#section-error-format
+        this.error = error.response.data.error.message;
       })
+
 
     },
     changeComponent(componentName) {
