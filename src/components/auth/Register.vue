@@ -61,6 +61,7 @@
 <script>
 import {Form, Field} from "vee-validate";
 import * as yup from "yup";
+import axios from "axios";
 
 export default {
   name: "Register",
@@ -91,12 +92,25 @@ export default {
     })
     return {
       schema,
+      apiKey: process.env.VUE_APP_FIREBASE_WEB_API_KEY
     }
   }
   ,
   methods: {
     submitData(values) {
-      console.log(values)
+      const signupDO = {
+        email: values.email,
+        password: values.password,
+        returnSecureToken: true
+      }
+      axios.post("https://identitytoolkit.googleapis.com/v1/accounts:signUp?key={{apiKey}}", signupDO)
+          .then(response => {
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error);
+          })
+
     },
     changeComponent(componentName) {
       this.$emit('change-component', {componentName})
