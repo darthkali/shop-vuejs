@@ -16,12 +16,18 @@
       </div>
     </template>
     <template #right-col>
-      <component
-          :is="componentName"
-          @change-component="changeComponent"
+      <transition
+          enter-active-class="animate__animated animate__bounceInRight"
+          leave-active-class="animate__animated animate__bounceOutRight"
+          mode="out-in"
       >
-        <Register/>
-      </component>
+        <component
+            :is="componentName"
+            @change-component="changeComponent"
+        >
+          <Register/>
+        </component>
+      </transition>
     </template>
   </TheTwoColumnsLayout>
 </template>
