@@ -1,14 +1,18 @@
 <template>
-  <div class="container">
-    <h1 class="bg-vue text-vue2">Test</h1>
-  </div>
+  <HomePage
+  />
+
 </template>
 
 
 <script>
+import HomePage from "./pages/HomePage";
 
 export default {
   name: 'App',
+  components: {
+    HomePage
+  }
 }
 </script>
 
