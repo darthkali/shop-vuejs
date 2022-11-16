@@ -6,7 +6,7 @@
     <div class="text-center">
       <h2>Jetzt registrieren</h2>
       <p> oder
-        <a class="text-vue2" role="button">
+        <a class="text-vue2" role="button" @click="changeComponent('login')">
           melden Sie sich mit Ihrem Konto an
         </a>
       </p>
@@ -68,6 +68,11 @@ export default {
     Form,
     Field
   },
+  emits: {
+    'change-component': (payload) => {
+      return payload.componentName === 'login';
+    }
+  },
   data() {
     const schema = yup.object().shape({
       email: yup
@@ -87,10 +92,14 @@ export default {
     return {
       schema,
     }
-  },
+  }
+  ,
   methods: {
     submitData(values) {
       console.log(values)
+    },
+    changeComponent(componentName) {
+      this.$emit('change-component', {componentName})
     }
   }
 }

@@ -11,12 +11,17 @@
           Erhalten Sie Zugriff auf exklusive Artikel
         </div>
         <div class="my-5 offset-4 col-4">
-          <img src="@/assets/shopping.svg" class="img-fluid">
+          <img src="@/assets/shopping.svg" class="img-fluid" alt="">
         </div>
       </div>
     </template>
     <template #right-col>
-      <Register/>
+      <component
+          :is="componentName"
+          @change-component="changeComponent"
+      >
+        <Register/>
+      </component>
     </template>
   </TheTwoColumnsLayout>
 </template>
@@ -24,13 +29,25 @@
 <script>
 import TheTwoColumnsLayout from "@/layouts/TheTwoColumnsLayout"; // @ is an alias to /src
 import Register from "@/components/auth/Register";
+import Login from "@/components/auth/Login";
 
 export default {
   name: "HomePage",
   components: {
     TheTwoColumnsLayout,
-    Register
-  }
+    Register,
+    Login
+  },
+  data() {
+    return {
+      componentName: "register",
+    };
+  },
+  methods: {
+    changeComponent(payload) {
+      this.componentName = payload.componentName;
+    },
+  },
 }
 </script>
 
