@@ -12,45 +12,56 @@
       </p>
     </div>
 
-    <form>
+    <Form @submit="submitData">
 
       <div class="form-row">
         <div class=" form-group col-md-8 offset-2">
           <label for="email"><strong>Email Adresse</strong></label>
-          <input type="email" class="form-control" id="email" placeholder="Email">
+          <Field as="input" name="email" type="email" class="form-control" id="email" placeholder="Email"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class=" form-group col-md-8 offset-2">
           <label for="password"><strong>Passwort</strong></label>
-          <input type="password" class="form-control" id="password" placeholder="Password">
+          <Field as="input" name="password" type="password" class="form-control" id="password" placeholder="Password"/>
         </div>
       </div>
 
       <div class="form-row">
         <div class=" form-group col-md-8 offset-2">
           <label for="confirmPassword"><strong>Passwort wiederholen</strong></label>
-          <input type="password" class="form-control" id="confirmPassword" placeholder="Password">
+          <Field as="input" name="confirmPassword" type="password" class="form-control" id="confirmPassword" placeholder="Password"/>
         </div>
       </div>
 
       <div class="form-row mt-3">
         <div class=" form-group col-md-8 offset-2">
           <div class="d-grid">
-            <div class="btn bg-vue">Registrieren</div>
+            <button class="btn bg-vue">Registrieren</button>
           </div>
         </div>
       </div>
 
-    </form>
+    </Form>
 
   </div>
 </template>
 
 <script>
+import {Form, Field} from "vee-validate";
+
 export default {
-  name: "Register"
+  name: "Register",
+  components: {
+    Form,
+    Field
+  },
+  methods: {
+    submitData(values) {
+      console.log(values)
+    }
+  }
 }
 </script>
 
