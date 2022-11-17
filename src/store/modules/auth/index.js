@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const apikey = process.env.VUE_APP_FIREBASE_WEB_API_KEY
+let timer
 
 const state = {
     userId: null,
@@ -32,7 +33,8 @@ const actions = {
         return axios.post(url, authDO)
             .then((response) => {
 
-                const expiresIn = Number(response.data.expiresIn) * 1000;
+                // const expiresIn = Number(response.data.expiresIn) * 1000;
+                const expiresIn = 3 * 1000;
                 const expDate = new Date().getTime() + expiresIn;
 
                 // Daten im LocalStorage speichern
@@ -40,6 +42,9 @@ const actions = {
                 localStorage.setItem("token", response.data.idToken);
                 localStorage.setItem("expiresIn", expDate);
 
+                timer = setTimeout(() => {
+                    context.dispatch("autoSignout");
+                }, expiresIn);
 
                 context.commit("setUser", {
                     userId: response.data.localId,
@@ -75,10 +80,17 @@ const actions = {
         localStorage.removeItem("token");
         localStorage.removeItem("expiresIn");
 
+        clearTimeout(timer)
+
         context.commit("setUser", {
             userId: null,
             token: null
         })
+    },
+
+
+    autoSignout(context) {
+        context.dispatch("signout");
     }
 
 }
