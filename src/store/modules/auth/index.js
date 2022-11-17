@@ -33,8 +33,7 @@ const actions = {
         return axios.post(url, authDO)
             .then((response) => {
 
-                // const expiresIn = Number(response.data.expiresIn) * 1000;
-                const expiresIn = 3 * 1000;
+                const expiresIn = Number(response.data.expiresIn) * 1000;
                 const expDate = new Date().getTime() + expiresIn;
 
                 // Daten im LocalStorage speichern
@@ -91,6 +90,28 @@ const actions = {
 
     autoSignout(context) {
         context.dispatch("signout");
+    },
+
+    autoSignin(context) {
+        const token = localStorage.getItem("token");
+        const userId = localStorage.getItem("userId");
+        const expiresIn = localStorage.getItem("expiresIn");
+
+        const timeLeft = Number(expiresIn) - new Date().getTime()
+        if (timeLeft < 0){
+            return
+        }
+
+        timer = setTimeout(() => {
+            context.dispatch("autoSignout");
+        }, timeLeft)
+
+        if (token && userId) {
+            context.commit("setUser", {
+                userId: userId,
+                token: token
+            })
+        }
     }
 
 }
