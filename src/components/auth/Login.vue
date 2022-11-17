@@ -13,7 +13,7 @@
     </div>
 
     <div class="alert alert-danger col-md-8 offset-2" v-if="error">
-      {{ errorDisplayText}}
+      {{ errorDisplayText }}
     </div>
 
     <Form @submit="submitData" :validation-schema="schema" v-slot="{errors}">
@@ -58,7 +58,6 @@
 <script>
 import {Form, Field} from "vee-validate";
 import * as yup from "yup";
-import axios from "axios";
 
 export default {
   name: "Login",
@@ -68,7 +67,8 @@ export default {
   },
   emits: {
     'change-component': (payload) => {
-      return payload.componentName === 'login';
+      return payload.componentName === "register";
+
     }
   },
   data() {
@@ -86,17 +86,16 @@ export default {
     })
     return {
       schema,
-      apiKey: process.env.VUE_APP_FIREBASE_WEB_API_KEY,
       error: "",
       isLoading: false
     }
   },
-  computed:{
-    errorDisplayText(){
-      if(this.error){
-        if(this.error.includes("INVALID_PASSWORD")){
+  computed: {
+    errorDisplayText() {
+      if (this.error) {
+        if (this.error.includes("INVALID_PASSWORD")) {
           return "Das Passwort ist nicht gültig"
-        } else if(this.error.includes("EMAIL_NOT_FOUND")){
+        } else if (this.error.includes("EMAIL_NOT_FOUND")) {
           return "Die Email Adresse ist nicht gültig"
         }
         return "Es ist ein unbekannter Fehler aufgetreten"
@@ -111,24 +110,17 @@ export default {
     submitData(values) {
       this.isLoading = true;
       this.error = "";
-      const signinDO = {
-        email: values.email,
-        password: values.password,
-        returnSecureToken: true
-      }
-      axios.post(
-          'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + this.apiKey,
-          signinDO
-      ).then(response => {
-        console.log(response);
+      this.$store
+          .dispatch("signin", {
+            email: values.email,
+            password: values.password
+          })
+          .then(() => {
+            this.isLoading = false;
+          }).catch((error) => {
         this.isLoading = false;
-      }).catch(error => {
-        // https://firebase.google.com/docs/reference/rest/auth#section-error-format
-        this.error = error.response.data.error.message;
-        this.isLoading = false;
+        this.error = error.message;
       })
-
-
     },
   }
 }
