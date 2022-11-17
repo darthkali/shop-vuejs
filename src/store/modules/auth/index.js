@@ -68,6 +68,17 @@ const actions = {
             mode: "signin"
         }
         return context.dispatch("auth", signinDO)
+    },
+
+    signout(context) {
+        localStorage.removeItem("userId");
+        localStorage.removeItem("token");
+        localStorage.removeItem("expiresIn");
+
+        context.commit("setUser", {
+            userId: null,
+            token: null
+        })
     }
 
 }
