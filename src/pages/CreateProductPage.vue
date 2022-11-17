@@ -5,7 +5,7 @@
         <div class="col-12">
           <h1 class="mt-4">
             Neuer Artikel
-            <button class="btn btn-lg bg-vue float-end">Speichern</button>
+            <button class="btn btn-lg bg-vue float-end" @click="createProduct()">Speichern</button>
           </h1>
           <div class="card mt-4">
             <div class="row no-gutters">
@@ -19,20 +19,17 @@
                 <div class="card-body">
                   <div class="row">
                     <div class="col-9">
-                      <h5 class="card-title mb-4">Produkttitel</h5>
+                      <h5 class="card-title mb-4">{{ product.title }}</h5>
                     </div>
                     <div class="col-3">
                       <div class="d-grid">
-                        <button class="btn  bg-vue2">15 €</button>
+                        <button class="btn  bg-vue2">{{ product.price }} €</button>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-12">
-                      lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, adipisci, alias, aliquid
-                      asperiores atque autem beatae commodi consequatur cumque cupiditate delectus deleniti
-                      deserunt dignissimos doloremque doloribus eius enim eos esse est et eum ex excepturi
-                      explicabo facilis fuga fugiat fugit harum hic id illum impedit in incidunt inventore
+                      {{ product.description }}
                     </div>
                   </div>
                 </div>
@@ -53,6 +50,23 @@ export default {
   components: {
     TheShopLayout
   },
+  data() {
+    return {
+      product: {
+        title: "Produkt " + Math.ceil(Math.random() * 10000),
+        description: `Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus, adipisci, alias, aliquid
+                      asperiores atque autem beatae commodi consequatur cumque cupiditate delectus deleniti
+                      deserunt dignissimos doloremque doloribus eius enim eos esse est et eum ex excepturi
+                      explicabo facilis fuga fugiat fugit harum hic id illum impedit in incidunt inventore`,
+        price: Math.ceil(Math.random() * 100)
+      },
+    };
+  },
+  methods: {
+    createProduct() {
+      this.$store.dispatch("storeProduct", this.product)
+    }
+  }
 }
 </script>
 
