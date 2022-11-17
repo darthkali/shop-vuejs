@@ -98,7 +98,7 @@ const actions = {
         const expiresIn = localStorage.getItem("expiresIn");
 
         const timeLeft = Number(expiresIn) - new Date().getTime()
-        if (timeLeft < 0){
+        if (timeLeft < 0) {
             return
         }
 
@@ -115,7 +115,11 @@ const actions = {
     }
 
 }
-const getters = {}
+const getters = {
+    isAuthenticated: (state) => !!state.token
+
+}
+
 
 const authModule = {
     state,
