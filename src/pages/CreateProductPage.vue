@@ -12,7 +12,7 @@
               <div class="col-md-4">
                 <img
                     src="https://dummyimage.com/600x400/34495e/fff"
-                    class="card-image"
+                    class="card-img"
                 />
               </div>
               <div class="col-md-8">
