@@ -2,6 +2,7 @@ import {createRouter, createWebHistory} from 'vue-router'
 import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
 import CreateProductPage from "@/pages/CreateProductPage";
+import ReadProductPage from "@/pages/ReadProductPage";
 import store from "@/store";
 
 const router = createRouter({
@@ -28,6 +29,16 @@ const router = createRouter({
         {
             path: "/shop/create/product",
             component: CreateProductPage,
+            meta: {
+                requiresAuth: true
+            }
+        },
+        {
+            path: "/shop/read/product/:id",
+            component: ReadProductPage,
+            meta: {
+                requiresAuth: true
+            }
         }
     ]
 })
