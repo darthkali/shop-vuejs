@@ -10,12 +10,13 @@
         </div>
       </div>
       <router-link
-          :to="`/shop/read/product/${product.id}`"
+          :to="{name:'ReadProduct',params: {id:product.id}}"
           class="stretched-link"
       />
 
     </div>
   </div>
+
 </template>
 
 <script>
