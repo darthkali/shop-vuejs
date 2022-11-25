@@ -37,6 +37,7 @@ const router = createRouter({
             path: "/shop/read/product/:id",
             name:"ReadProduct",
             component: ReadProductPage,
+            props: true,
             meta: {
                 requiresAuth: true
             }

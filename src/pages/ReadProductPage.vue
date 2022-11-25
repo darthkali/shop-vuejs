@@ -12,7 +12,7 @@
               Zurück
             </button>
           </h1>
-          <div class="card mt-4">
+          <div class="card mt-4" v-if="product">
             <div class="row no-gutters">
               <div class="col-md-4">
                 <img
@@ -41,6 +41,16 @@
               </div>
             </div>
           </div>
+          <div class="card mt-4">
+            <div class="card-body">
+              <h4>Das könnte Sie auch interessieren...</h4>
+              <router-link
+                  :to="{name:'ReadProduct', params:{id:'-NH52X1osxwZdq5ZFiys'}}"
+              >
+                -NH52X1osxwZdq5ZFiys
+              </router-link>
+            </div>
+          </div>
         </div>
       </div>
     </template>
@@ -55,19 +65,26 @@ export default {
   components: {
     TheShopLayout
   },
-  data() {
-    return {
-      id: null,
-    }
+  props:{
+    id:String,
   },
+  // data() {
+  //   return {
+  //     id: null,
+  //   }
+  // },
   computed: {
     product() {
       return this.$store.getters.product(this.id)
     }
   },
-  created() {
-    this.id = this.$route.params.id;
-  }
+  // created() {
+  //   this.id = this.$route.params.id;
+  // },
+  // beforeRouteUpdate(to){
+  //   console.log(to)
+  //   this.id = to.params.id;
+  // }
 
 }
 </script>
