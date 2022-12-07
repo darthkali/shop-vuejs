@@ -3,6 +3,7 @@ import HomePage from "@/pages/HomePage";
 import ShopPage from "@/pages/ShopPage";
 import CreateProductPage from "@/pages/CreateProductPage";
 import ReadProductPage from "@/pages/ReadProductPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 import store from "@/store";
 
 const router = createRouter({
@@ -10,6 +11,7 @@ const router = createRouter({
     routes: [
         {
             path: "/",
+            alias: "/home",
             component: HomePage,
             beforeEnter: (to, from, next) => {
                 if (store.getters.isAuthenticated) {
@@ -39,8 +41,15 @@ const router = createRouter({
             component: ReadProductPage,
             props: true,
             meta: {
-                requiresAuth: true
+                requiresAuth: true,
+                enterTransition:"rubberBand",
             }
+        },
+        {
+            // immer ganz am Ende
+            path: "/:pathMatch(.*)*",
+            component:NotFoundPage,
+
         }
     ]
 })

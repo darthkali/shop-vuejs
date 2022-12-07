@@ -1,5 +1,12 @@
 <template>
-  <router-view></router-view>
+  <router-view v-slot="{Component}">
+    <transition
+        :enter-active-class="`animate__animated animate__${$route.meta.enterTransition}`"
+        leave-active-class="animate__animated animate__fadeOut"
+        mode="out-in">
+      <component :is="Component" :key="$route.path"></component>
+    </transition>
+  </router-view>
 </template>
 
 
@@ -7,18 +14,18 @@
 
 export default {
   name: 'App',
-  computed:{
-    token(){
+  computed: {
+    token() {
       return this.$store.getters.token
     }
   },
   created() {
     this.$store.dispatch("autoSignin");
   },
-  watch:{
-    token:{
-      handler(){
-        if (this.token){
+  watch: {
+    token: {
+      handler() {
+        if (this.token) {
           this.$store.dispatch("fetchProducts")
         }
       },
