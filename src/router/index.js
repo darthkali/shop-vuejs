@@ -1,8 +1,8 @@
 import {createRouter, createWebHistory} from 'vue-router'
-import HomePage from "@/pages/HomePage";
-import ShopPage from "@/pages/ShopPage";
-import CreateProductPage from "@/pages/CreateProductPage";
-import ReadProductPage from "@/pages/ReadProductPage";
+// import HomePage from "@/pages/HomePage";
+// import ShopPage from "@/pages/ShopPage";
+// import CreateProductPage from "@/pages/CreateProductPage";
+// import ReadProductPage from "@/pages/ReadProductPage";
 import NotFoundPage from "@/pages/NotFoundPage";
 import store from "@/store";
 
@@ -12,7 +12,7 @@ const router = createRouter({
         {
             path: "/",
             alias: "/home",
-            component: HomePage,
+            component: () => import(/* webpackChunkName: 'component-homepage' */ '@/pages/HomePage.vue'),
             beforeEnter: (to, from, next) => {
                 if (store.getters.isAuthenticated) {
                     next("/shop")
@@ -23,14 +23,14 @@ const router = createRouter({
         },
         {
             path: "/shop",
-            component: ShopPage,
+            component: () => import(/* webpackChunkName: 'group-shop' */ '@/pages/ShopPage.vue'),
             meta: {
                 requiresAuth: true
             }
         },
         {
             path: "/shop/create/product",
-            component: CreateProductPage,
+            component: () => import(/* webpackChunkName: 'component-createproductpage' */ '@/pages/CreateProductPage.vue'),
             meta: {
                 requiresAuth: true
             }
@@ -38,7 +38,7 @@ const router = createRouter({
         {
             path: "/shop/read/product/:id",
             name:"ReadProduct",
-            component: ReadProductPage,
+            component: () => import(/* webpackChunkName: 'group-shop' */ '@/pages/ReadProductPage.vue'),
             props: true,
             meta: {
                 requiresAuth: true,
@@ -48,7 +48,7 @@ const router = createRouter({
         {
             // immer ganz am Ende
             path: "/:pathMatch(.*)*",
-            component:NotFoundPage,
+            component:() => NotFoundPage,
 
         }
     ]
